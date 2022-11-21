@@ -1,24 +1,18 @@
-# README
+# Climate Garden
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## System dependencies
 
-Things you may want to cover:
+- Ruby 3.1.2
+- PostgreSQL 15.1
 
-* Ruby version
+## Running the app locally
 
-* System dependencies
+- `rails server`
 
-* Configuration
+## Running the tests
 
-* Database creation
+- `rspec`
 
-* Database initialization
+## Running the linter
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- `rubocop`

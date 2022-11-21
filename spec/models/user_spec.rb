@@ -4,29 +4,30 @@ require 'rails_helper'
 
 RSpec.describe User do
   it 'creates users with valid params' do
-    user_params = {
-      name: 'a' * 70,
-      phone: '+15555555555'
-    }
+    expect { create(:user) }.not_to raise_error
+  end
 
-    expect { described_class.create!(user_params) }.not_to raise_error
+  it 'disallows nil name' do
+    user = build(:user, name: nil)
+
+    expect { user.save! }.to raise_error(ActiveRecord::NotNullViolation)
+  end
+
+  it 'disallows nil phone' do
+    user = build(:user, phone: nil)
+
+    expect { user.save! }.to raise_error(ActiveRecord::NotNullViolation)
   end
 
   it 'limits names to 70 characters' do
-    user_params = {
-      name: 'a' * 71,
-      phone: '+15555555555'
-    }
+    user = build(:user, name: 'a' * 71)
 
-    expect { described_class.create!(user_params) }.to raise_error(ActiveRecord::ValueTooLong)
+    expect { user.save! }.to raise_error(ActiveRecord::ValueTooLong)
   end
 
   it 'limits phones to 12 characters' do
-    user_params = {
-      name: 'a' * 70,
-      phone: '+155555555559'
-    }
+    user = build(:user, phone: '+155555555559')
 
-    expect { described_class.create!(user_params) }.to raise_error(ActiveRecord::ValueTooLong)
+    expect { user.save! }.to raise_error(ActiveRecord::ValueTooLong)
   end
 end

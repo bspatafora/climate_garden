@@ -9,7 +9,7 @@ RSpec.describe User, type: :model do
       phone: '+15555555555'
     }
 
-    expect { User.create!(user_params) }.not_to raise_error
+    expect { described_class.create!(user_params) }.not_to raise_error
   end
 
   it 'limits names to 70 characters' do
@@ -18,7 +18,7 @@ RSpec.describe User, type: :model do
       phone: '+15555555555'
     }
 
-    expect { User.create!(user_params) }.to raise_error(ActiveRecord::ValueTooLong)
+    expect { described_class.create!(user_params) }.to raise_error(ActiveRecord::ValueTooLong)
   end
 
   it 'limits phones to 12 characters' do
@@ -27,6 +27,6 @@ RSpec.describe User, type: :model do
       phone: '+155555555559'
     }
 
-    expect { User.create!(user_params) }.to raise_error(ActiveRecord::ValueTooLong)
+    expect { described_class.create!(user_params) }.to raise_error(ActiveRecord::ValueTooLong)
   end
 end

@@ -23,5 +23,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_18_220138) do
     t.index ["inviter_id"], name: "index_users_on_inviter_id"
   end
 
-  add_foreign_key "users", "users", column: "inviter_id"
+  add_foreign_key "users", "users", column: "inviter_id", on_delete: :nullify
 end

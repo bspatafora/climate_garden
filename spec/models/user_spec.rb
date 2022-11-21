@@ -30,4 +30,18 @@ RSpec.describe User do
 
     expect { user.save! }.to raise_error(ActiveRecord::ValueTooLong)
   end
+
+  it 'requires inviter to exist' do
+    user = build(:user, inviter_id: 0)
+
+    expect { user.save! }.to raise_error(ActiveRecord::InvalidForeignKey)
+  end
+
+  it 'nullifies inviter upon deletion' do
+    inviter = create(:user)
+    user = create(:user, inviter:)
+    inviter.destroy!
+
+    expect(user.reload.inviter).to be_nil
+  end
 end

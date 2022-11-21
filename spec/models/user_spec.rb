@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
+RSpec.describe User do
   it 'creates users with valid params' do
     user_params = {
       name: 'a' * 70,

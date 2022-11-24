@@ -16,7 +16,7 @@ RSpec.describe User do
   it 'disallows nil phone' do
     user = build(:user, phone: nil)
 
-    expect { user.save! }.to raise_error(ActiveRecord::NotNullViolation)
+    expect { user.save! }.to raise_error(ActiveRecord::RecordInvalid)
   end
 
   it 'limits names to 70 characters' do
@@ -26,12 +26,18 @@ RSpec.describe User do
   end
 
   it 'limits phones to 12 characters' do
-    user = build(:user, phone: '+155555555559')
+    user = build(:user, phone: '+123456789000')
 
-    expect { user.save! }.to raise_error(ActiveRecord::ValueTooLong)
+    expect { user.save! }.to raise_error(ActiveRecord::RecordInvalid)
   end
 
-  it 'requires inviter to exist' do
+  it 'disallows invalid phone' do
+    user = build(:user, phone: '234-567-8900')
+
+    expect { user.save! }.to raise_error(ActiveRecord::RecordInvalid)
+  end
+
+  it 'disallows invalid inviter' do
     user = build(:user, inviter_id: 0)
 
     expect { user.save! }.to raise_error(ActiveRecord::InvalidForeignKey)

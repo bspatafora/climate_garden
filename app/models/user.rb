@@ -6,4 +6,6 @@ class User < ApplicationRecord
           foreign_key: 'inviter_id',
           dependent: :nullify,
           inverse_of: false
+
+  validates :phone, phone: true
 end

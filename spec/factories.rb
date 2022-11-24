@@ -3,6 +3,6 @@
 FactoryBot.define do
   factory :user do
     name { 'Usie McUserson' }
-    phone { '+15555555555' }
+    phone { '+12345678900' }
   end
 end

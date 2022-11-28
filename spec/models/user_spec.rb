@@ -10,7 +10,7 @@ RSpec.describe User do
   it 'disallows nil name' do
     user = build(:user, name: nil)
 
-    expect { user.save! }.to raise_error(ActiveRecord::NotNullViolation)
+    expect { user.save! }.to raise_error(ActiveRecord::RecordInvalid)
   end
 
   it 'disallows nil phone' do
@@ -22,7 +22,7 @@ RSpec.describe User do
   it 'limits names to 70 characters' do
     user = build(:user, name: 'a' * 71)
 
-    expect { user.save! }.to raise_error(ActiveRecord::ValueTooLong)
+    expect { user.save! }.to raise_error(ActiveRecord::RecordInvalid)
   end
 
   it 'limits phones to 12 characters' do

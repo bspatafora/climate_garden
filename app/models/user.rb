@@ -7,5 +7,6 @@ class User < ApplicationRecord
           dependent: :nullify,
           inverse_of: false
 
-  validates :phone, phone: true
+  validates :name, presence: true, length: { maximum: 70 }
+  validates :phone, presence: true, length: { maximum: 12 }, phone: true
 end

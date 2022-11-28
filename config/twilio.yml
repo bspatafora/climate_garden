@@ -1,0 +1,5 @@
+shared:
+  account_sid: ***REMOVED***
+  auth_token: ***REMOVED***
+  phone_number: ***REMOVED***
+  url_base: https://api.twilio.com

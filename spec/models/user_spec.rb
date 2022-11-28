@@ -19,22 +19,30 @@ RSpec.describe User do
     expect { user.save! }.to raise_error(ActiveRecord::RecordInvalid)
   end
 
-  it 'limits names to 70 characters' do
+  it 'limits name to 70 characters' do
     user = build(:user, name: 'a' * 71)
 
     expect { user.save! }.to raise_error(ActiveRecord::RecordInvalid)
   end
 
-  it 'limits phones to 12 characters' do
+  it 'limits phone to 12 characters' do
     user = build(:user, phone: '+123456789000')
 
     expect { user.save! }.to raise_error(ActiveRecord::RecordInvalid)
   end
 
-  it 'disallows invalid phone' do
-    user = build(:user, phone: '234-567-8900')
+  it 'normalizes phone to E.164 format' do
+    user = build(:user, phone: '1-234-567-8900')
 
-    expect { user.save! }.to raise_error(ActiveRecord::RecordInvalid)
+    expect { user.save! }.not_to raise_error
+  end
+
+  it 'assumes US phone' do
+    user = build(:user, phone: '(234) 567-8900')
+
+    user.save!
+
+    expect(user.phone).to eq('+12345678900')
   end
 
   it 'disallows invalid inviter' do

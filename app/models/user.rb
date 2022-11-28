@@ -9,4 +9,10 @@ class User < ApplicationRecord
 
   validates :name, presence: true, length: { maximum: 70 }
   validates :phone, presence: true, length: { maximum: 12 }, phone: true
+
+  before_validation :normalize_phone
+
+  def normalize_phone
+    self.phone = Phonelib.parse(phone, 'US').e164
+  end
 end

@@ -6,6 +6,8 @@ class User < ApplicationRecord
           foreign_key: 'inviter_id',
           dependent: :nullify,
           inverse_of: false
+  has_many :one_time_passwords,
+           dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 70 }
   validates :phone, presence: true, length: { maximum: 12 }, phone: true

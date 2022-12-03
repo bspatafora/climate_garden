@@ -1,0 +1,12 @@
+<h1>Log in</h1>
+
+<%= form_with url: login_requests_path do |form| %>
+  <div>
+    <%= form.label :phone %><br>
+    <%= form.text_field :phone %>
+  </div>
+
+  <div>
+    <%= form.submit 'Send code' %>
+  </div>
+<% end %>

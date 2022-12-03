@@ -17,6 +17,12 @@ RSpec.describe OneTimePassword do
 
       expect { otp.save! }.to raise_error(ActiveRecord::RecordInvalid)
     end
+
+    it 'has a default' do
+      otp = create(:one_time_password)
+
+      expect(otp.expires_at).to be_a(Time)
+    end
   end
 
   describe 'user' do
@@ -32,6 +38,20 @@ RSpec.describe OneTimePassword do
       user.destroy!
 
       expect { otp.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
+  describe '#valid' do
+    it 'returns true if otp has not yet expired' do
+      otp = create(:one_time_password, expires_at: 1.second.from_now)
+
+      expect(described_class.where(user: otp.user).valid).to exist
+    end
+
+    it 'returns false if otp has expired' do
+      otp = create(:one_time_password, expires_at: 1.second.ago)
+
+      expect(described_class.where(user: otp.user).valid).not_to exist
     end
   end
 end

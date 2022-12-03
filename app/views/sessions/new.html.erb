@@ -1,1 +1,13 @@
 <h1>Log in</h1>
+
+<%= form_with url: sessions_path do |form| %>
+  <%= hidden_field_tag 'phone', @phone %>
+  <div>
+    <%= form.label :otp %><br>
+    <%= form.text_field :otp %>
+  </div>
+
+  <div>
+    <%= form.submit 'Log in' %>
+  </div>
+<% end %>

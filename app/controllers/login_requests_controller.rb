@@ -7,9 +7,10 @@ class LoginRequestsController < ApplicationController
 
   def create
     user = User.find_by(phone: login_request_params[:phone])
+    otp = user.one_time_passwords.create
     SmsClient.new.send(
       to: user.phone,
-      message: "Code: #{user.one_time_passwords.create.value}"
+      message: "Code: #{otp.value}"
     )
     redirect_to controller: :sessions, action: :new, phone: login_request_params[:phone]
   end

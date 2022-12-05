@@ -14,6 +14,8 @@ class User < ApplicationRecord
 
   before_validation :normalize_phone
 
+  alias otps one_time_passwords
+
   def normalize_phone
     self.phone = Phonelib.parse(phone, 'US').e164
   end

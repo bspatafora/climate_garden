@@ -7,8 +7,6 @@ FactoryBot.define do
   end
 
   factory :one_time_password do
-    value { '12345' }
-    expires_at { 5.minutes.from_now }
     user
   end
 end

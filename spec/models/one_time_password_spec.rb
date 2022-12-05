@@ -9,6 +9,12 @@ RSpec.describe OneTimePassword do
 
       expect { otp.save! }.to raise_error(ActiveRecord::RecordInvalid)
     end
+
+    it 'defaults to a random, six-digit number' do
+      otp = create(:one_time_password)
+
+      expect(otp.value.length).to eq(6)
+    end
   end
 
   describe 'expires_at' do
@@ -18,10 +24,10 @@ RSpec.describe OneTimePassword do
       expect { otp.save! }.to raise_error(ActiveRecord::RecordInvalid)
     end
 
-    it 'has a default' do
+    it 'defaults to some future time' do
       otp = create(:one_time_password)
 
-      expect(otp.expires_at).to be_a(Time)
+      expect(otp.expires_at).to be > Time.current
     end
   end
 

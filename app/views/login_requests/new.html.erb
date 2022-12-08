@@ -4,6 +4,9 @@
   <div>
     <%= form.label :phone %><br>
     <%= form.text_field :phone %>
+    <% if flash[:alert].present? %>
+      <div><%= flash[:alert] %></div>
+    <% end %>
   </div>
 
   <div>

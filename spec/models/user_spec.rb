@@ -30,16 +30,8 @@ RSpec.describe User do
       expect { user.save! }.to raise_error(ActiveRecord::RecordInvalid)
     end
 
-    it 'normalizes to E.164 format' do
-      user = build(:user, phone: '1-234-567-8900')
-
-      expect { user.save! }.not_to raise_error
-    end
-
-    it 'assumes US number' do
-      user = build(:user, phone: '(234) 567-8900')
-
-      user.save!
+    it 'normalizes phone' do
+      user = create(:user, phone: '(234) 567-8900')
 
       expect(user.phone).to eq('+12345678900')
     end
@@ -58,6 +50,23 @@ RSpec.describe User do
       inviter.destroy!
 
       expect(user.reload.inviter).to be_nil
+    end
+  end
+
+  describe 'find_by' do
+    it 'normalizes phone' do
+      user = create(:user, phone: '+12345678900')
+      expect(described_class.find_by(phone: '(234) 567-8900')).to eq(user)
+    end
+  end
+
+  describe 'normalize' do
+    it 'normalizes to E.164 format' do
+      expect(described_class.normalize('1 (234) 567-8900')).to eq('+12345678900')
+    end
+
+    it 'assumes US number' do
+      expect(described_class.normalize('(234) 567-8900')).to eq('+12345678900')
     end
   end
 end

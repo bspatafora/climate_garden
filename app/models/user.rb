@@ -16,7 +16,18 @@ class User < ApplicationRecord
 
   alias otps one_time_passwords
 
+  def self.find_by(*args)
+    conditions = args[0]
+    phone = conditions[:phone]
+    conditions[:phone] = normalize(phone) if phone
+    super(*args)
+  end
+
+  def self.normalize(phone)
+    Phonelib.parse(phone, 'US').e164
+  end
+
   def normalize_phone
-    self.phone = Phonelib.parse(phone, 'US').e164
+    self.phone = self.class.normalize(phone)
   end
 end

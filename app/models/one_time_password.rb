@@ -18,4 +18,11 @@ class OneTimePassword < ApplicationRecord
   def self.random_six_digit
     (SecureRandom.random_number(9e5) + 1e5).to_i
   end
+
+  # TODO: Test
+  def self.valid?(value, user)
+    latest_valid = where(user:).valid.order(created_at: :desc).first
+
+    value == latest_valid.value
+  end
 end

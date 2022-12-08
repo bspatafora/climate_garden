@@ -5,6 +5,9 @@
   <div>
     <%= form.label :otp %><br>
     <%= form.text_field :otp %>
+    <% if flash[:alert].present? %>
+      <div><%= flash[:alert] %></div>
+    <% end %>
   </div>
 
   <div>

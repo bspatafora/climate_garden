@@ -41,7 +41,7 @@ RSpec.describe 'Login requests' do
       end
     end
 
-    context 'when request is not valid' do
+    context 'when no user associated with phone' do
       let(:non_existent_phone) { '+15555555555' }
 
       it 'returns HTTP 422' do

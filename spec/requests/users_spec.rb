@@ -45,16 +45,16 @@ RSpec.describe 'Users' do
       end
     end
 
-    context 'when request is not valid' do
-      let(:bad_user_attributes) { { bad: 'data' } }
+    context 'when submitted attributes are invalid' do
+      let(:invalid_user_attributes) { { bad: 'data' } }
 
       it 'returns HTTP 422' do
-        post '/users', params: { user: bad_user_attributes }
+        post '/users', params: { user: invalid_user_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
       it 'renders the new user form' do
-        post '/users', params: { user: bad_user_attributes }
+        post '/users', params: { user: invalid_user_attributes }
         expect(response.body).to include('form', 'name', 'phone')
       end
     end

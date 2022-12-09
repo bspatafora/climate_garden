@@ -5,6 +5,7 @@ require 'sms_client'
 class LoginRequestsController < ApplicationController
   def new; end
 
+  # TODO: Rate limit
   def create
     phone = login_request_params[:phone]
     user = User.find_by(phone:)

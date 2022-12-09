@@ -2,6 +2,7 @@
 
 require 'securerandom'
 
+# TODO: Job to clean up old, expired OTPs
 class OneTimePassword < ApplicationRecord
   EXPIRATION = 5.minutes
 
@@ -19,10 +20,11 @@ class OneTimePassword < ApplicationRecord
     (SecureRandom.random_number(9e5) + 1e5).to_i
   end
 
+  # TODO: Prevent same code from being used twice
   def self.valid?(value, user)
-    latest_valid = where(user:).unexpired.order(created_at: :desc).first
+    latest_unexpired = where(user:).unexpired.order(created_at: :desc).first
 
-    return false if latest_valid.nil?
+    return false if latest_unexpired.nil?
 
     value == latest_valid.value
   end

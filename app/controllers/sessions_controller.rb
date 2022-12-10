@@ -7,6 +7,7 @@ class SessionsController < ApplicationController
     @phone = session_params[:phone]
   end
 
+  # TODO: Rate limit
   def create
     user = User.find_by(phone: session_params[:phone])
     otp = session_params[:otp]

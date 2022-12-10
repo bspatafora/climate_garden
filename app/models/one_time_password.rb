@@ -2,7 +2,7 @@
 
 require 'securerandom'
 
-# TODO: Job to clean up old, expired OTPs
+# TODO: Job to clean up old OTPs
 class OneTimePassword < ApplicationRecord
   EXPIRATION = 5.minutes
 

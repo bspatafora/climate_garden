@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_many :one_time_passwords,
            dependent: :destroy
 
+  has_many_attached :plant_photos
+
   validates :name, presence: true, length: { maximum: 70 }
   validates :phone, presence: true, length: { maximum: 12 }, phone: true
 

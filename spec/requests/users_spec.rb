@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Users' do
+  before { log_in }
+
   describe 'GET /show' do
     let(:user) { create(:user) }
 

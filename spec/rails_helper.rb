@@ -9,6 +9,7 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require_relative 'support/factory_bot'
+require_relative 'support/helpers'
 require_relative 'support/webmock'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in

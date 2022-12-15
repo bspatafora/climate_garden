@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
+  skip_before_action :authenticate_user!, only: %i[new create]
+
   def new
-    redirect_to controller: :login_requests, action: :new unless session_params[:phone]
+    redirect_to new_login_request_path unless session_params[:phone]
 
     @phone = session_params[:phone]
   end
 
+  # TODO: Don’t expire session on browser close
   # TODO: Rate limit
   def create
     user = User.find_by(phone: session_params[:phone])
@@ -14,7 +17,7 @@ class SessionsController < ApplicationController
 
     if OneTimePassword.valid?(otp, user)
       log_in(user)
-      redirect_to controller: :users, action: :show, id: user.id
+      redirect_to user
     else
       flash.now[:alert] = 'Invalid code'
       render :new, status: :unprocessable_entity

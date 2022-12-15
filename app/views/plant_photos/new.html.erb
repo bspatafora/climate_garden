@@ -1,0 +1,12 @@
+<h1>New Plant Photo</h1>
+
+<%= form_with url: plant_photos_path do |form| %>
+  <div>
+    <%= form.label :plant_photo %>
+    <%= form.file_field :plant_photo %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

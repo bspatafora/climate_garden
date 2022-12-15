@@ -3,6 +3,8 @@
 require 'sms_client'
 
 class LoginRequestsController < ApplicationController
+  skip_before_action :authenticate_user!, only: %i[new create]
+
   def new; end
 
   # TODO: Rate limit
@@ -13,7 +15,7 @@ class LoginRequestsController < ApplicationController
     if user
       otp = create_otp(user)
       send_sms(user, otp)
-      redirect_to controller: :sessions, action: :new, phone:
+      redirect_to new_session_path(phone:)
     else
       flash.now[:alert] = 'No user exists with that phone'
       render :new, status: :unprocessable_entity

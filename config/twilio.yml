@@ -1,5 +1,7 @@
+<% credentials = Rails.application.credentials.twilio %>
+
 shared:
-  account_sid: ***REMOVED***
-  auth_token: ***REMOVED***
-  phone_number: ***REMOVED***
+  account_sid: <%= credentials.account_sid %>
+  auth_token: <%= credentials.auth_token %>
+  phone_number: <%= credentials.phone_number %>
   url_base: https://api.twilio.com

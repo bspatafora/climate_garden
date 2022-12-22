@@ -9,6 +9,7 @@ class PlantPhotosController < ApplicationController
 
   def create
     current_user.plant_photos.attach(plant_photos_params[:plant_photo])
+    redirect_to plant_photos_path
   end
 
   private
